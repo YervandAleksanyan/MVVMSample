@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdkVersion = project.ext.sharedCompileSdkVersion
+    buildToolsVersion = project.ext.sharedBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.sharedMinSdkVersion
+        targetSdkVersion project.ext.sharedTargetSdkVersion
+        versionCode project.ext.appVersionCode
+        versionName project.ext.appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    sourceSets {
+        main { java.srcDirs = ['src/main/java', 'src/test/java/com.tickster.boxpoint.core'] }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    //Koin
+    api "org.koin:koin-core-ext:${versions.koin}"
+
+    //Networking
+    api "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+    api "com.squareup.okhttp3:okhttp:${versions.okhttpVersion}"
+    api "com.squareup.okhttp3:logging-interceptor:${versions.okhttpVersion}"
+    api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${versions.coroutinesAdapter}"
+
+
+    //Coroutines library
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+}

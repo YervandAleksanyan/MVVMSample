@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion = project.ext.sharedCompileSdkVersion
+    buildToolsVersion = project.ext.sharedBuildToolsVersion
+
+defaultConfig {
+    minSdkVersion project.ext.sharedMinSdkVersion
+    targetSdkVersion project.ext.sharedTargetSdkVersion
+    versionCode project.ext.appVersionCode
+    versionName project.ext.appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    api project(':core')
+    implementation project(':viewmodel')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    //support
+    api "androidx.annotation:annotation:${versions.annotation}"
+    api "androidx.appcompat:appcompat:${versions.appCompat}"
+    implementation 'com.google.android.material:material:1.0.0'
+
+    //DI
+    implementation "org.koin:koin-android:${versions.koin}"
+    implementation "org.koin:koin-androidx-ext:${versions.koin}"
+
+    //UI
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+
+
+    //binding
+    kapt "androidx.databinding:databinding-compiler:${versions.binding}"
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigationLibrary}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigationLibrary}"
+
+    //dialogs
+    implementation "com.afollestad.material-dialogs:core:${versions.dialogs}"}
